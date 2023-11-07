@@ -4,15 +4,14 @@ import "hardhat-deploy";
 import "hardhat-gas-reporter";
 import "solidity-coverage";
 
+import "./tasks/build-l1";
+
 const config: HardhatUserConfig = {
   networks: {
     hardhat: {
     },
-    local: {
+    localhost: {
       url: 'http://localhost:8545',
-      accounts: [
-        'ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80',
-      ],
     },
   },
   gasReporter: {
@@ -20,15 +19,16 @@ const config: HardhatUserConfig = {
     currency: "USD",
   },
   namedAccounts: {
-    deployer: {
-      default: 0,
-    },
+    deployer: { default: 0 },
+    owner: { default: 1 },
+    sequencer: { default: 2 },
+    batcher: { default: 3 },
   },
   mocha: {
     timeout: 50000,
   },
   etherscan: {
-    // blockscout is supported too as same as etherscan
+    // BlockScout is also supported, functioning in the same manner as Etherscan.
     apiKey: process.env.BLOCKSCOUT_API_KEY,
   },
   solidity: {

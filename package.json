@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "hardhat compile --show-stack-traces",
+    "chain": "hardhat node --no-deploy",
     "deploy": "hardhat deploy --network hardhat",
     "test": "hardhat test",
     "clean": "hardhat clean",
