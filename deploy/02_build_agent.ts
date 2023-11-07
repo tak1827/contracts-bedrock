@@ -2,6 +2,8 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { loadContract, ZERO_ADDRESS } from "../src/utils";
 
+const BUILD_AGENT_V1_ADDRESS: string = process.env.BUILD_AGENT_V1_ADDRESS || ZERO_ADDRESS;
+
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { deployments, getNamedAccounts } = hre;
   const { deploy } = deployments;
@@ -17,7 +19,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   await deploy("L1BuildAgent", {
     from: deployer,
-    args: [bL2OutputOracle.target, bOptimismPortal.target, bL1CrossDomainMessenger.target, bSystemConfig.target, bL1StandardBridge.target, bL1ERC721Bridge.target, ZERO_ADDRESS],
+    args: [bL2OutputOracle.target, bOptimismPortal.target, bL1CrossDomainMessenger.target, bSystemConfig.target, bL1StandardBridge.target, bL1ERC721Bridge.target, BUILD_AGENT_V1_ADDRESS],
     waitConfirmations,
     log: true,
     autoMine: true,

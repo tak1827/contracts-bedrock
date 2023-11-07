@@ -62,7 +62,7 @@ contract L2OutputOracle is Initializable, ISemver {
     /// @param newNextOutputIndex  Next L2 output index after the deletion.
     event OutputsDeleted(uint256 indexed prevNextOutputIndex, uint256 indexed newNextOutputIndex);
 
-    /// @notice Semantic version -> comment out to activate oasys customized version
+    /// @notice Semantic version // CUSTOM:OASYS -> will comment out to activate oasys customized version
     /// @custom:semver 1.5.0
     string public constant version = "1.5.0";
 
@@ -93,7 +93,7 @@ contract L2OutputOracle is Initializable, ISemver {
         address _proposer,
         address _challenger
     )
-        // internal  /// @notice visibility is changed from public to internal by oasys custom
+        /// CUSTOM:OASYS visibility will be changed from public to internal by oasys custom
         public
         reinitializer(2)
     {
@@ -179,7 +179,7 @@ contract L2OutputOracle is Initializable, ISemver {
         bytes32 _l1BlockHash,
         uint256 _l1BlockNumber
     )
-        public virtual /// @notice visibility is chenged from external to override by oasys custom
+        public virtual /// CUSTOM:OASYS visibility will be chenged from external to override by oasys custom
         payable
     {
         require(msg.sender == proposer, "L2OutputOracle: only the proposer address can propose new outputs");
