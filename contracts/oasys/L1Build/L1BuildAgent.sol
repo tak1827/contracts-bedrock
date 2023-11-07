@@ -35,6 +35,7 @@ contract L1BuildAgent is Semver {
     IL1BuildAgentV1 public immutable l1BuildAgentV1;
 
     /// @notice The map of chainId => SystemConfig contract address
+    ///         The SystemConfig holds the addresses of the other contracts, So agent don't manage it
     mapping(uint256 => address) public chainSystemConfig;
     
     /// @notice List of chainIds that have been deployed, Return all chainIds at once
