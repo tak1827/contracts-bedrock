@@ -1,18 +1,29 @@
-import { task } from "hardhat/config";
-import { EventLog } from "ethers";
+import { task } from 'hardhat/config'
+import { EventLog } from 'ethers'
 import * as types from 'hardhat/internal/core/params/argumentTypes'
-import { loadContract, ZERO_ADDRESS, findEventByName } from "../src/utils"
+import { loadContract, ZERO_ADDRESS, findEventByName } from '../src/utils'
 
-task("buildl1", "Deploy Verse build contract set on L1")
-  .addParam("chainId", "The chain id of Verse, This must be unique", undefined, types.int)
-  .addParam("owner", "The `finalSystemOwner` having privilege to upgrade contracts", undefined, types.string, true)
-  .addParam("proposer", "l2OutputOracleProposer", undefined, types.string, true)
-  .addParam("batcher", "batchSenderAddress", undefined, types.string, true)
-  .addParam("l2BlockTime", "l2BlockTime", 2, types.int, true)
+task('buildl1', 'Deploy Verse build contract set on L1')
+  .addParam(
+    'chainId',
+    'The chain id of Verse, This must be unique',
+    undefined,
+    types.int
+  )
+  .addParam(
+    'owner',
+    'The `finalSystemOwner` having privilege to upgrade contracts',
+    undefined,
+    types.string,
+    true
+  )
+  .addParam('proposer', 'l2OutputOracleProposer', undefined, types.string, true)
+  .addParam('batcher', 'batchSenderAddress', undefined, types.string, true)
+  .addParam('l2BlockTime', 'l2BlockTime', 2, types.int, true)
 
   .setAction(async (args, hre) => {
-    const { getNamedAccounts } = hre;
-    const { owner, sequencer, batcher } = await getNamedAccounts();
+    const { getNamedAccounts } = hre
+    const { owner, sequencer, batcher } = await getNamedAccounts()
     const config = {
       finalSystemOwner: args.owner ? args.owner : owner,
       l2OutputOracleProposer: args.sequencer ? args.sequencer : sequencer,
@@ -26,14 +37,17 @@ task("buildl1", "Deploy Verse build contract set on L1")
     }
 
     // assert config
-    if (config.finalSystemOwner === undefined) throw new Error("owner is undefined");
-    if (config.l2OutputOracleProposer === undefined) throw new Error("proposer is undefined");
-    if (config.batchSenderAddress === undefined) throw new Error("batcher is undefined");
+    if (config.finalSystemOwner === undefined)
+      throw new Error('owner is undefined')
+    if (config.l2OutputOracleProposer === undefined)
+      throw new Error('proposer is undefined')
+    if (config.batchSenderAddress === undefined)
+      throw new Error('batcher is undefined')
 
-    console.log("config:", config);
-    
-    const agent = await loadContract(hre, "L1BuildAgent");
-    const receipt = await (await agent.build(args.chainId, config)).wait();
+    console.log('config:', config)
+
+    const agent = await loadContract(hre, 'L1BuildAgent')
+    const receipt = await (await agent.build(args.chainId, config)).wait()
 
     const e = findEventByName(receipt!.logs as EventLog[], 'Deployed')
     console.log(`
@@ -47,5 +61,4 @@ Deployed contracts:
 
 BatchInbox: ${e.args?.batchInbox}
 `)
-    
-  });
+  })

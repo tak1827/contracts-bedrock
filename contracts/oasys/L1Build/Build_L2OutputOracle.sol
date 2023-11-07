@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.15;
 
 import { Semver } from "../../universal/Semver.sol";
-import { ProxyAdmin } from "../../universal/ProxyAdmin.sol";
 import { L2OutputOracle } from "../../L1/L2OutputOracle.sol";
+
 // import { L2OutputOracle } from "../L1/OasysL2OutputOracle.sol";
 
 /// @notice Hold the deployment bytecode
@@ -17,6 +17,10 @@ contract Build_L2OutputOracle is Semver {
         uint256 l2BlockTime,
         uint256 finalizationPeriodSeconds
     ) public pure returns (bytes memory) {
-        return abi.encodePacked(abi.encodePacked(type(L2OutputOracle).creationCode), abi.encode(l2OutputOracleSubmissionInterval, l2BlockTime, finalizationPeriodSeconds));
+        return
+            abi.encodePacked(
+                abi.encodePacked(type(L2OutputOracle).creationCode),
+                abi.encode(l2OutputOracleSubmissionInterval, l2BlockTime, finalizationPeriodSeconds)
+            );
     }
 }

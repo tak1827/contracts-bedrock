@@ -1,0 +1,9 @@
+{
+  "extends": "solhint:recommended",
+  "rules": {
+    "custom-errors": "",
+    "func-visibility": ["warn",{"ignoreConstructors":true}],
+    "contract-name-camelcase": ""
+  }
+}
+

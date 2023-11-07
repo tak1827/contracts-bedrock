@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.15;
 
 import { Semver } from "../../universal/Semver.sol";
 import { L1CrossDomainMessenger } from "../../L1/L1CrossDomainMessenger.sol";

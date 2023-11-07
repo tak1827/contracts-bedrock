@@ -2,10 +2,11 @@
 The opstack bedrock versions of contracts is scheduled for deployment on the Oasys blockchain platform.
 The referenced version of Opstack is [v1.1.6](https://github.com/ethereum-optimism/optimism/tree/v1.1.6/packages/contracts-bedrock)
 
-<!-- # PreRequirements
+# PreRequirements
 |  Software  |  Version  |
 | ---- | ---- |
-|  Node  |  ^v16.x  | -->
+|  node  |  ^v16.x  |
+|  eslint  |  ^v8.x  |
 
 # Getting Started
 ```sh
@@ -35,4 +36,5 @@ The [L1BuildAgent](./contracts/oasys/L1Build/L1BuildAgent.sol) serves as the ent
 - [L1CrossDomainMessenger](./contracts/L1/L1CrossDomainMessenger.sol)
 - [L1StandardBridge](./contracts/L1/L1StandardBridge.sol)
 - [L1ERC721Bridge](./contracts/L1/L1ERC721Bridge.sol)
+
 During the deployment, rather than deploying the entire contract set, we primarily deploy proxy contracts and perform initializations—except during the first deployment, when the implementation contracts are also deployed. By adopting the proxy pattern, the owner address is empowered to upgrade any of these contracts. The true custodian of the contracts is the [ProxyAdmin](./contracts/universal/ProxyAdmin.sol) contract, which means that the actual ownership lies with the ProxyAdmin's owner. Upgrades are conducted through the ProxyAdmin, which sends transactions to the individual proxies.

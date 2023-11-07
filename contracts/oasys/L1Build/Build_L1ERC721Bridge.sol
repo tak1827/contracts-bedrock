@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.15;
 
 import { Semver } from "../../universal/Semver.sol";
-import { ProxyAdmin } from "../../universal/ProxyAdmin.sol";
 import { L1ERC721Bridge } from "../../L1/L1ERC721Bridge.sol";
-import { L1CrossDomainMessenger } from "../../L1/L1CrossDomainMessenger.sol";
 
 /// @notice Hold the deployment bytecode
 ///         Separate from build contract to avoid bytecode size limitations
