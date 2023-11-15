@@ -259,12 +259,13 @@ contract L2OutputOracle is Initializable, ISemver {
         return lo;
     }
 
+    // CUSTOM:OASYS -> change visibility from external to public by oasys custom
     /// @notice Returns the L2 output proposal that checkpoints a given L2 block number.
     ///         Uses a binary search to find the first output greater than or equal to the given
     ///         block.
     /// @param _l2BlockNumber L2 block number to find a checkpoint for.
     /// @return First checkpoint that commits to the given L2 block number.
-    function getL2OutputAfter(uint256 _l2BlockNumber) external view returns (Types.OutputProposal memory) {
+    function getL2OutputAfter(uint256 _l2BlockNumber) public view returns (Types.OutputProposal memory) {
         return l2Outputs[getL2OutputIndexAfter(_l2BlockNumber)];
     }
 
