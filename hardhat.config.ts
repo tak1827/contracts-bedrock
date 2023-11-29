@@ -14,8 +14,10 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
     },
-    localhost: {
-      url: 'http://localhost:8545',
+    opstack: {
+      url: 'http://127.0.0.1:8545',
+      accounts: [DEPLOYER_KEY],
+      gasPrice: 1000000000 // 1 gwai
     },
     any: {
       url: NETWORK_URL,
@@ -29,8 +31,9 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: { default: 0 },
     owner: { default: 1 },
-    sequencer: { default: 2 },
-    batcher: { default: 3 },
+    p2psequencer: { default: 2 },
+    proposer: { default:3 },
+    batcher: { default: 4 },
   },
   mocha: {
     timeout: 50000,

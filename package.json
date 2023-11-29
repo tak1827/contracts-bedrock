@@ -7,6 +7,8 @@
     "build": "hardhat compile --show-stack-traces",
     "chain": "hardhat node --no-deploy",
     "deploy": "hardhat deploy --network hardhat",
+    "deploy:opstack": "hardhat deploy --network opstack --reset",
+    "buildl1:opstack": "hardhat buildl1 --network opstack --chain-id 123  --owner 0xccf3e6b439D0B0546fc2ac48afb3f2Cac0c84d26 --p2psequencer 0xa914B9cA99677b5B9B4931D25Cd634aA9D10C537 --proposer 0xa8d4AcF8081A20d2EFb2229169bc52750Cb085D4 --batcher 0xEd98afe5ED8424A251DD0b7813f67DB2833531eF",
     "test": "hardhat test",
     "clean": "hardhat clean",
     "lint": "solhint 'contracts/**/*.sol'",

@@ -17,16 +17,18 @@ task('buildl1', 'Deploy Verse build contract set on L1')
     types.string,
     true
   )
+  .addParam('p2psequencer', 'batchSenderAddress', undefined, types.string, true)
   .addParam('proposer', 'l2OutputOracleProposer', undefined, types.string, true)
   .addParam('batcher', 'batchSenderAddress', undefined, types.string, true)
   .addParam('l2BlockTime', 'l2BlockTime', 2, types.int, true)
 
   .setAction(async (args, hre) => {
     const { getNamedAccounts } = hre
-    const { owner, sequencer, batcher } = await getNamedAccounts()
+    const { owner, p2psequencer, proposer, batcher } = await getNamedAccounts()
     const config = {
       finalSystemOwner: args.owner ? args.owner : owner,
-      l2OutputOracleProposer: args.sequencer ? args.sequencer : sequencer,
+      p2pSequencerAddress: args.p2psequencer ? args.p2psequencer : p2psequencer,
+      l2OutputOracleProposer: args.proposer ? args.proposer : proposer,
       l2OutputOracleChallenger: ZERO_ADDRESS,
       batchSenderAddress: args.batcher ? args.batcher : batcher,
       l2BlockTime: args.l2BlockTime,
@@ -39,6 +41,8 @@ task('buildl1', 'Deploy Verse build contract set on L1')
     // assert config
     if (config.finalSystemOwner === undefined)
       throw new Error('owner is undefined')
+    if (config.p2pSequencerAddress === undefined)
+      throw new Error('p2psequencer is undefined')
     if (config.l2OutputOracleProposer === undefined)
       throw new Error('proposer is undefined')
     if (config.batchSenderAddress === undefined)

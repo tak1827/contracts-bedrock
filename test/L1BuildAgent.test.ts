@@ -8,10 +8,12 @@ describe('L1BuildAgent', function () {
   async function deployFixture() {
     const signers = await ethers.getSigners()
     const vOwner = signers[1].address
-    const sequencer = signers[2].address
-    const batcher = signers[3].address
+    const p2psequencer = signers[2].address
+    const sequencer = signers[3].address
+    const batcher = signers[4].address
     const defaultConfig = {
       finalSystemOwner: vOwner,
+      p2pSequencerAddress: p2psequencer,
       l2OutputOracleProposer: sequencer,
       l2OutputOracleChallenger: ZERO_ADDRESS,
       batchSenderAddress: batcher,

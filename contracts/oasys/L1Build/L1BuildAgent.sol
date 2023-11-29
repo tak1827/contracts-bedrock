@@ -60,29 +60,13 @@ contract L1BuildAgent is Semver {
         address batchInbox
     );
 
-    constructor(
-        IBuild_L2OutputOracle _bOutputOracle,
-        IBuild_Common _bOptimismPortal,
-        IBuild_Common _bL1CrossDomainMessenger,
-        IBuild_Common _bSystemConfig,
-        IBuild_Common _bL1StandardBridg,
-        IBuild_Common _bL1ERC721Bridge,
-        IL1BuildAgentV1 _buildAgentV1
-    ) Semver(2, 0, 0) {
-        BUILD_L2OUTPUT_ORACLE = _bOutputOracle;
-        BUILD_OPTIMISM_PORTAL = _bOptimismPortal;
-        BUILD_L1CROSS_DOMAIN_MESSENGER = _bL1CrossDomainMessenger;
-        BUILD_SYSTEM_CONFIG = _bSystemConfig;
-        BUILD_L1_STANDARD_BRIDGE = _bL1StandardBridg;
-        _BUILD_L1_ERC721_BRIDGE = _bL1ERC721Bridge;
-
-        L1_BUILD_AGENT_V1 = _buildAgentV1;
-    }
-
     struct BuildConfig {
         // The owner of L1 contract set. Any L1 contract that is ownable has this account set as its owner
         // Value: depending on each verse
         address finalSystemOwner;
+        // The address of the p2p sequencer. This address is sign the block for p2p propagation
+        // Value: depending on each verse
+        address p2pSequencerAddress;
         // The address of proposer. this address is recorded in L2OutputOracle contract as `proposer`
         // Value: depening of each verse
         address l2OutputOracleProposer;
@@ -104,6 +88,25 @@ contract L1BuildAgent is Semver {
         /// ------ considering to remove the following parameters ------
         uint256 l2OutputOracleStartingBlockNumber;
         uint256 l2OutputOracleStartingTimestamp;
+    }
+
+    constructor(
+        IBuild_L2OutputOracle _bOutputOracle,
+        IBuild_Common _bOptimismPortal,
+        IBuild_Common _bL1CrossDomainMessenger,
+        IBuild_Common _bSystemConfig,
+        IBuild_Common _bL1StandardBridg,
+        IBuild_Common _bL1ERC721Bridge,
+        IL1BuildAgentV1 _buildAgentV1
+    ) Semver(2, 0, 0) {
+        BUILD_L2OUTPUT_ORACLE = _bOutputOracle;
+        BUILD_OPTIMISM_PORTAL = _bOptimismPortal;
+        BUILD_L1CROSS_DOMAIN_MESSENGER = _bL1CrossDomainMessenger;
+        BUILD_SYSTEM_CONFIG = _bSystemConfig;
+        BUILD_L1_STANDARD_BRIDGE = _bL1StandardBridg;
+        _BUILD_L1_ERC721_BRIDGE = _bL1ERC721Bridge;
+
+        L1_BUILD_AGENT_V1 = _buildAgentV1;
     }
 
     /// @notice Deploy the L1 contract set to build Verse, This is th main function.
@@ -243,9 +246,7 @@ contract L1BuildAgent is Semver {
                     1000_000, // gasPriceOracleScalar
                     bytes32(uint256(uint160(_cfg.batchSenderAddress))),
                     30_000_000, // l2GenesisBlockGasLimit
-                    // This is originally `p2pSequencerAddress` which sign the block for p2p propagation
-                    // Don't distinguish between sequencer and p2pSequencerAddress(=unsafeBlockSigner)
-                    _cfg.l2OutputOracleProposer,
+                    _cfg.p2pSequencerAddress, // p2pSequencerAddress(=unsafeBlockSigner)
                     Constants.DEFAULT_RESOURCE_CONFIG(),
                     block.number, // systemConfigStartBlock
                     batchInbox,
